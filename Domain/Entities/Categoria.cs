@@ -38,4 +38,10 @@ public class Categoria
         Finalidade = finalidade;
     }
 
+    public void Atualizar(string descricao, FinalidadeCategoria finalidade)
+    {
+        SetDescricao(descricao);
+        SetFinalidade(finalidade);
+    }
+
 }

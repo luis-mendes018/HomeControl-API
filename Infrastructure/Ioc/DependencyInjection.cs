@@ -1,4 +1,6 @@
-﻿using Infrastructure.Context;
+﻿using Domain.Interfaces;
+
+using Infrastructure.Context;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using MySqlConnector;
 
-namespace Infrastructure;
+namespace Infrastructure.Ioc;
 
 public static class DependencyInjection
 {
@@ -20,6 +22,8 @@ public static class DependencyInjection
 
               services.AddDbContext<AppDataContext>(options =>
            options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

@@ -3,6 +3,5 @@
 public enum FinalidadeCategoria
 {
     Despesa = 1,
-    Receita = 2,
-    Ambos = 3
+    Receita = 2
 }

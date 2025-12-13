@@ -6,4 +6,9 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Interfaces\ICategoriaRepository.cs~RF4507296.TMP" />
+    <None Remove="Interfaces\IRepository.cs~RF40d99f.TMP" />
+  </ItemGroup>
+
 </Project>
