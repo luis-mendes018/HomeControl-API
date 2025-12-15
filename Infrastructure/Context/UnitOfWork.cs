@@ -9,6 +9,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly AppDataContext _context;
     private ICategoriaRepository _categoriaRepository;
     private IUsuarioRepository _usuarioRepository;
+    private ITransacaoRepository _transacaoRepository;
 
     public UnitOfWork(AppDataContext context)
     {
@@ -20,6 +21,9 @@ public class UnitOfWork : IUnitOfWork
 
     public IUsuarioRepository UsuarioRepository
         => _usuarioRepository ??= new UsuarioRepository(_context);
+
+    public ITransacaoRepository TransacaoRepository
+        => _transacaoRepository ??= new TransacaoRepository(_context);
 
     public async Task CommitAsync()
     {

@@ -5,7 +5,7 @@ namespace Domain.Interfaces;
 
 public interface ITransacaoRepository : IRepository<Transacao>
 {
-    Task<PagedResult<Categoria>> BuscarTransacaoPorNomeAsync(
+    Task<PagedResult<Transacao>> BuscarTransacaoPorNomeAsync(
         string descricao,
         int pageNumber,
         int pageSize);

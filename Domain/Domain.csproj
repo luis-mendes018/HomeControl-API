@@ -11,6 +11,7 @@
     <None Remove="Interfaces\ICategoriaRepository.cs~RF4507296.TMP" />
     <None Remove="Interfaces\IRepository.cs~RF40d99f.TMP" />
     <None Remove="Interfaces\ITransacaoRepository.cs~RF1778c80.TMP" />
+    <None Remove="Interfaces\ITransacaoRepository.cs~RF610e199.TMP" />
     <None Remove="Interfaces\IUnitOfWork.cs~RF17890a2.TMP" />
     <None Remove="Interfaces\IUsuarioRepository.cs~RF4b2c6c4.TMP" />
     <None Remove="Interfaces\IUsuarioRepository.cs~RF4bf10f2.TMP" />

@@ -1,15 +1,11 @@
 ﻿using Application.DTOs.Usuario;
-
 using Asp.Versioning;
-
 using Domain.Entities;
 using Domain.Interfaces;
-
 using FluentValidation;
-
 using Microsoft.AspNetCore.Mvc;
-
 using Nelibur.ObjectMapper;
+
 
 namespace HomeControl.Controllers;
 

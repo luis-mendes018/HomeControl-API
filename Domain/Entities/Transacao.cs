@@ -17,20 +17,20 @@ public class Transacao
     public Usuario Usuario { get; set; }
 
     //Contrutor para criação de uma nova transação
-    public Transacao(decimal valor, DateTime data, 
+    public Transacao(decimal valor, 
         string descricao, 
-        Guid categoriaId, 
         Categoria categoria,
-         int codigoTransacao,
          TipoTransacao tipoTransacao,
          Usuario usuario)
     {
        Id = Guid.NewGuid();
+
+        CodigoTransacao = GerarCodigoTransacao();
+
         DefinirValor(valor);
         DefinirDescricao(descricao);
         DefinirCategoria(categoria);
         SetTipoTransacao(tipoTransacao);
-        CodigoTransacao = codigoTransacao;
         DefinirUsuario(usuario);
     }
 
@@ -77,4 +77,8 @@ public class Transacao
         UsuarioId = usuario.Id;
     }
 
+    private static int GerarCodigoTransacao()
+    {
+        return Random.Shared.Next(1000000000, int.MaxValue);
+    }
 }

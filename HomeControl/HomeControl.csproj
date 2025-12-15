@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="appsettings.json~RF9526bf3.TMP" />
+    <None Remove="Controllers\TransacoesController.cs~RF609fce3.TMP" />
     <None Remove="Properties\launchSettings.json~RF4e3c4c2.TMP" />
   </ItemGroup>
 

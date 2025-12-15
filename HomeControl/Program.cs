@@ -1,6 +1,8 @@
 using Application.DTOs.Categoria;
+using Application.DTOs.Transacao;
 using Application.DTOs.Usuario;
 using Application.Validators.Categorias;
+using Application.Validators.Transacoes;
 using Application.Validators.Usuarios;
 
 using Asp.Versioning;
@@ -46,11 +48,18 @@ builder.Services.AddMappings();
 
 builder.Services.AddInfraServices(builder.Configuration);
 
+// Register Validators
+
+//Usuarios
 builder.Services.AddScoped<IValidator<UsuarioCreateDto>, UsuarioCreateDtoValidator>();
 builder.Services.AddScoped<IValidator<UsuarioUpdateDto>, UsuarioUpdateDtoValidator>();
 
+//Categorias
 builder.Services.AddScoped<IValidator<CategoriaCreateDto>, CategoriaCreateDtoValidator>();
 builder.Services.AddScoped<IValidator<CategoriaUpdateDto>, CategoriaUpdateDtoValidator>();
+
+//Transacoes
+builder.Services.AddScoped<IValidator<TransacaoCreateDto>, TransacaoCreateDtoValidator>();
 
 
 var app = builder.Build();
