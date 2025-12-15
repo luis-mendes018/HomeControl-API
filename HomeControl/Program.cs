@@ -1,5 +1,7 @@
 using Application.DTOs.Categoria;
+using Application.DTOs.Usuario;
 using Application.Validators.Categorias;
+using Application.Validators.Usuarios;
 
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
@@ -9,8 +11,6 @@ using FluentValidation;
 using HomeControl.Extensions;
 
 using Infrastructure.Ioc;
-
-using Microsoft.OpenApi.Models;
 
 
 
@@ -26,6 +26,7 @@ builder.Configuration
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+
 builder.Services.AddApiVersioning(options =>
 {
     options.AssumeDefaultVersionWhenUnspecified = true;
@@ -39,41 +40,17 @@ builder.Services.AddApiVersioning(options =>
 });
 
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization header usando o esquema Bearer",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
-});
-
-
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddMappings();
 
 builder.Services.AddInfraServices(builder.Configuration);
 
+builder.Services.AddScoped<IValidator<UsuarioCreateDto>, UsuarioCreateDtoValidator>();
+builder.Services.AddScoped<IValidator<UsuarioUpdateDto>, UsuarioUpdateDtoValidator>();
+
 builder.Services.AddScoped<IValidator<CategoriaCreateDto>, CategoriaCreateDtoValidator>();
 builder.Services.AddScoped<IValidator<CategoriaUpdateDto>, CategoriaUpdateDtoValidator>();
-
 
 
 var app = builder.Build();
@@ -99,7 +76,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

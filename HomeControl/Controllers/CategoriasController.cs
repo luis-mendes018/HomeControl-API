@@ -1,8 +1,14 @@
 ﻿using Application.DTOs.Categoria;
+
 using Asp.Versioning;
+
 using Domain.Entities;
 using Domain.Interfaces;
+
+using FluentValidation;
+
 using Microsoft.AspNetCore.Mvc;
+
 using Nelibur.ObjectMapper;
 
 namespace HomeControl.Controllers;
@@ -13,10 +19,16 @@ namespace HomeControl.Controllers;
 public class CategoriasController : ControllerBase
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidator<CategoriaCreateDto> _createValidator;
+    private readonly IValidator<CategoriaUpdateDto> _updateValidator;
 
-    public CategoriasController(IUnitOfWork unitOfWork)
+    public CategoriasController(IUnitOfWork unitOfWork, 
+        IValidator<CategoriaUpdateDto> updateValidator, 
+        IValidator<CategoriaCreateDto> createValidator)
     {
         _unitOfWork = unitOfWork;
+        _updateValidator = updateValidator;
+        _createValidator = createValidator;
     }
 
     [HttpGet]
@@ -79,6 +91,17 @@ public class CategoriasController : ControllerBase
     public async Task<ActionResult<CategoriaResponseDto>> Create(
         [FromBody] CategoriaCreateDto categoriaCreateDto)
     {
+        var validationResult = await _createValidator.ValidateAsync(categoriaCreateDto);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors.Select(e => new
+            {
+                Campo = e.PropertyName,
+                Erro = e.ErrorMessage
+            }));
+        }
+
         var categoria = new Categoria(categoriaCreateDto.Descricao, categoriaCreateDto.Finalidade);
 
         await _unitOfWork.CategoriaRepository.AddAsync(categoria);
@@ -95,6 +118,17 @@ public class CategoriasController : ControllerBase
     Guid id,
     [FromBody] CategoriaUpdateDto categoriaUpdateDto)
     {
+        var validationResult = await _updateValidator.ValidateAsync(categoriaUpdateDto);
+
+        if (!validationResult.IsValid)
+        {
+            foreach (var error in validationResult.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }
+            return BadRequest(ModelState);
+        }
+
         var categoria = await _unitOfWork.CategoriaRepository.GetByIdAsync(id);
         if (categoria == null) return NotFound();
 

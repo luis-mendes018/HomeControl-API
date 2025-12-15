@@ -25,9 +25,10 @@ public class TransacaoMap : IEntityTypeConfiguration<Transacao>
         builder.HasOne(x => x.Categoria)
         .WithMany()
         .HasForeignKey(x => x.CategoriaId);
-
-        builder.Property(x => x.Data)
-            .IsRequired();
+       
+        builder.HasOne(x => x.Usuario)
+        .WithMany()
+        .HasForeignKey(x => x.UsuarioId);
 
     }
 }

@@ -7,11 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DTOs\Transacao\TransacaoCreateDto.cs~RF45125b9.TMP" />
+    <None Remove="DTOs\Transacao\TransacaoCreateDto.cs~RF4533cc2.TMP" />
+    <None Remove="DTOs\Transacao\TransacaoCreateDto.cs~RF48bdf0c.TMP" />
+    <None Remove="DTOs\Transacao\TransacaoResponseDto.cs~RF5397f6a.TMP" />
+    <None Remove="Mappings\TinyMapperConfig.cs~RF5043c48.TMP" />
     <None Remove="Validators\Categorias\CategoriaCreateDtoValidator.cs~RF4062410.TMP" />
+    <None Remove="Validators\Usuarios\UsuarioCreateDtoValidator.cs~RF5730f31.TMP" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
   </ItemGroup>
 

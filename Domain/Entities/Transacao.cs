@@ -1,4 +1,5 @@
-﻿using Domain.Exceptions;
+﻿using Domain.Enums;
+using Domain.Exceptions;
 
 namespace Domain.Entities;
 
@@ -7,28 +8,30 @@ public class Transacao
     public Guid Id { get; private set; }
     public int CodigoTransacao { get; private set; }
     public decimal Valor { get; private set; }
-    public DateTime Data { get; private set; }
-    public bool EhAgendada { get; private set; }
     public string Descricao { get; private set; }
     public Guid CategoriaId { get; private set; }
     public Categoria Categoria { get; private set; }
+    public TipoTransacao Tipo { get; private set; }
 
+    public Guid UsuarioId { get; set; }
+    public Usuario Usuario { get; set; }
 
     //Contrutor para criação de uma nova transação
     public Transacao(decimal valor, DateTime data, 
         string descricao, 
         Guid categoriaId, 
         Categoria categoria,
-         bool ehAgendada,
-         int codigoTransacao)
+         int codigoTransacao,
+         TipoTransacao tipoTransacao,
+         Usuario usuario)
     {
        Id = Guid.NewGuid();
         DefinirValor(valor);
         DefinirDescricao(descricao);
-        DefinirAgendamento(ehAgendada);
-        DefinirData(data, EhAgendada);
         DefinirCategoria(categoria);
+        SetTipoTransacao(tipoTransacao);
         CodigoTransacao = codigoTransacao;
+        DefinirUsuario(usuario);
     }
 
     //Contrutor para EF Core
@@ -49,26 +52,6 @@ public class Transacao
         Descricao = descricao;
     }
 
-    private void DefinirAgendamento(bool agendada)
-    {
-        EhAgendada = agendada;
-    }
-
-    private void DefinirData(DateTime data, bool ehAgendada)
-    {
-        if (ehAgendada)
-        {
-            if (data <= DateTime.Now)
-                throw new DomainException("Transações agendadas devem ter data futura.");
-
-            Data = data;
-        }
-        else
-        {
-            // Transação imediata
-            Data = DateTime.Now;
-        }
-    }
 
     private void DefinirCategoria(Categoria categoria)
     {
@@ -76,6 +59,22 @@ public class Transacao
             throw new DomainException("A categoria é obrigatória.");
         Categoria = categoria;
         CategoriaId = categoria.Id;
+    }
+
+    private void SetTipoTransacao(TipoTransacao tipoTransacao)
+    {
+        if (!Enum.IsDefined(typeof(TipoTransacao), tipoTransacao))
+            throw new DomainException("Tipo de transação inválida.");
+
+        Tipo = tipoTransacao;
+    }
+
+    private void DefinirUsuario(Usuario usuario)
+    {
+        if (usuario == null)
+            throw new DomainException("O usuário é obrigatório.");
+        Usuario = usuario;
+        UsuarioId = usuario.Id;
     }
 
 }
