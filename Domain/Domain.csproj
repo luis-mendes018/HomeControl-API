@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="Enums\FinalidadeCategoria.cs~RF24e223.TMP" />
     <None Remove="Interfaces\ICategoriaRepository.cs~RF4507296.TMP" />
+    <None Remove="Interfaces\ICategoriaRepository.cs~RFa779246.TMP" />
     <None Remove="Interfaces\IRepository.cs~RF40d99f.TMP" />
     <None Remove="Interfaces\ITransacaoRepository.cs~RF1778c80.TMP" />
     <None Remove="Interfaces\ITransacaoRepository.cs~RF610e199.TMP" />

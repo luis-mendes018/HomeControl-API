@@ -8,7 +8,7 @@ public class Categoria
     public Guid Id { get; private set; }
     public string Descricao { get; private set; }
     public FinalidadeCategoria Finalidade { get; private set; }
-
+    public ICollection<Transacao> Transacoes { get; private set; }
     public Categoria(string descricao, FinalidadeCategoria finalidade)
     {
         Id = Guid.NewGuid();
@@ -17,7 +17,10 @@ public class Categoria
     }
 
     //Construtor para EF Core
-    private Categoria() { }
+    private Categoria() 
+    {
+        Transacoes = new List<Transacao>();
+    }
 
     private void SetDescricao(string descricao)
     {

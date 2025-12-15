@@ -1,15 +1,10 @@
 ﻿using Application.DTOs.Transacao;
-
 using Asp.Versioning;
-
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
-
 using FluentValidation;
-
 using Microsoft.AspNetCore.Mvc;
-
 using Nelibur.ObjectMapper;
 
 namespace HomeControl.Controllers;
@@ -59,11 +54,12 @@ public class TransacoesController : ControllerBase
 
     [HttpGet("buscar")]
     public async Task<ActionResult<IEnumerable<TransacaoResponseDto>>> BuscarPorDescricao(
-        [FromQuery] string descricao,
+        [FromQuery] string filtro,
         [FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10)
     {
-        var pagedResult = await _unitOfWork.TransacaoRepository.BuscarTransacaoPorNomeAsync(descricao, pageNumber, pageSize);
+        var pagedResult = await _unitOfWork.TransacaoRepository.BuscarTransacaoPorNomeOuCodigoAsync(filtro, pageNumber, pageSize);
+
         Response.Headers["X-PageNumber"] = pagedResult.PageNumber.ToString();
         Response.Headers["X-PageSize"] = pagedResult.PageSize.ToString();
         Response.Headers["X-TotalRecords"] = pagedResult.TotalRecords.ToString();

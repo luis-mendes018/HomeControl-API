@@ -9,10 +9,11 @@ public class Transacao
     public int CodigoTransacao { get; private set; }
     public decimal Valor { get; private set; }
     public string Descricao { get; private set; }
-    public Guid CategoriaId { get; private set; }
-    public Categoria Categoria { get; private set; }
-    public TipoTransacao Tipo { get; private set; }
+    public DateTime DataCriacao { get; private set; }
 
+    public Guid CategoriaId { get; private set; }
+    public virtual Categoria Categoria { get; private set; }
+    public TipoTransacao Tipo { get; private set; }
     public Guid UsuarioId { get; set; }
     public Usuario Usuario { get; set; }
 
@@ -24,7 +25,7 @@ public class Transacao
          Usuario usuario)
     {
        Id = Guid.NewGuid();
-
+        DataCriacao = DateTime.Now;
         CodigoTransacao = GerarCodigoTransacao();
 
         DefinirValor(valor);

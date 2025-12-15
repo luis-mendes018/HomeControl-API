@@ -1,4 +1,6 @@
-﻿using Domain.Interfaces;
+﻿using Application.Services;
+
+using Domain.Interfaces;
 
 using Infrastructure.Context;
 
@@ -20,10 +22,18 @@ public static class DependencyInjection
             configuration.GetConnectionString("DefaultConnection"));
 
 
-              services.AddDbContext<AppDataContext>(options =>
-           options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+        services.AddDbContext<AppDataContext>(options =>
+        {
+            options
+                .UseMySql(
+                    mySqlConnection,
+                    ServerVersion.AutoDetect(mySqlConnection)
+                );
+        });
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<TransacaoService>();
+
 
         return services;
     }

@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using Domain.Entities;
+using Domain.Models;
 
 namespace Domain.Interfaces;
 
@@ -9,5 +10,5 @@ public interface ICategoriaRepository : IRepository<Categoria>
         string descricao,
         int pageNumber,
         int pageSize);
-
+    
 }

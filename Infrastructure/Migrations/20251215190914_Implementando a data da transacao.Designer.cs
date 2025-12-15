@@ -4,6 +4,7 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    partial class AppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20251215190914_Implementando a data da transacao")]
+    partial class Implementandoadatadatransacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +53,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CategoriaId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("CategoriaId1")
-                        .HasColumnType("char(36)");
-
                     b.Property<int>("CodigoTransacao")
                         .HasColumnType("int");
 
@@ -77,8 +77,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
-
-                    b.HasIndex("CategoriaId1");
 
                     b.HasIndex("UsuarioId");
 
@@ -112,10 +110,6 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Categoria", null)
-                        .WithMany("Transacoes")
-                        .HasForeignKey("CategoriaId1");
-
                     b.HasOne("Domain.Entities.Usuario", "Usuario")
                         .WithMany("Transacoes")
                         .HasForeignKey("UsuarioId")
@@ -125,11 +119,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Categoria");
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Categoria", b =>
-                {
-                    b.Navigation("Transacoes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Usuario", b =>

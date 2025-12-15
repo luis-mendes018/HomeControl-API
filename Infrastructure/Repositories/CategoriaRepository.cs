@@ -1,6 +1,8 @@
 ﻿using Domain.Common;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces;
+using Domain.Models;
 
 using Infrastructure.Context;
 
@@ -42,6 +44,4 @@ public class CategoriaRepository
             pageSize,
             totalRecords);
     }
-
-
 }

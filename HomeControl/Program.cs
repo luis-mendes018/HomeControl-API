@@ -1,6 +1,7 @@
 using Application.DTOs.Categoria;
 using Application.DTOs.Transacao;
 using Application.DTOs.Usuario;
+using Application.Services;
 using Application.Validators.Categorias;
 using Application.Validators.Transacoes;
 using Application.Validators.Usuarios;
@@ -60,6 +61,7 @@ builder.Services.AddScoped<IValidator<CategoriaUpdateDto>, CategoriaUpdateDtoVal
 
 //Transacoes
 builder.Services.AddScoped<IValidator<TransacaoCreateDto>, TransacaoCreateDtoValidator>();
+
 
 
 var app = builder.Build();
