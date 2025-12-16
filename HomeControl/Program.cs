@@ -44,11 +44,16 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: OriginAcessoPermitido,
      policy =>
      {
-         policy.WithOrigins("http://localhost:3000/")
+         policy.WithOrigins("http://localhost:3000")
          .AllowAnyHeader()
          .AllowAnyMethod()
          .AllowCredentials()
-         .WithExposedHeaders("X-Pagination");
+         .WithExposedHeaders(
+                "x-pagenumber",
+                "x-pagesize",
+                "x-totalpages",
+                "x-totalrecords"
+            );
      });
 });
 
