@@ -9,6 +9,11 @@ using Nelibur.ObjectMapper;
 
 namespace HomeControl.Controllers;
 
+
+/// <summary>
+/// Controlador responsável pelo gerenciamento de transações financeiras.
+/// Permite consulta, busca e criação de transações, aplicando regras de negócio.
+/// </summary>
 [Route("api/v{version:apiVersion}/transacoes")]
 [ApiController]
 [ApiVersion("1.0")]
@@ -24,7 +29,12 @@ public class TransacoesController : ControllerBase
         _createValidator = createValidator;
     }
 
-
+    /// <summary>
+    /// Retorna uma lista paginada de transações.
+    /// </summary>
+    /// <param name="pageNumber">Número da página.</param>
+    /// <param name="pageSize">Quantidade de registros por página.</param>
+    /// <returns>Lista de transações.</returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TransacaoResponseDto>>> GetAll(
         [FromQuery] int pageNumber = 1,
@@ -40,6 +50,11 @@ public class TransacoesController : ControllerBase
         return Ok(dtoList);
     }
 
+    /// <summary>
+    /// Retorna uma transação específica pelo identificador.
+    /// </summary>
+    /// <param name="id">Id da transação.</param>
+    /// <returns>Transação encontrada ou 404.</returns>
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<TransacaoResponseDto>> GetById(Guid id)
     {
@@ -52,6 +67,13 @@ public class TransacoesController : ControllerBase
         return Ok(dto);
     }
 
+    /// <summary>
+    /// Busca transações por descrição ou código, com paginação.
+    /// </summary>
+    /// <param name="filtro">Texto para busca.</param>
+    /// <param name="pageNumber">Número da página.</param>
+    /// <param name="pageSize">Quantidade de registros.</param>
+    /// <returns>Lista de transações filtradas.</returns>
     [HttpGet("buscar")]
     public async Task<ActionResult<IEnumerable<TransacaoResponseDto>>> BuscarPorDescricao(
         [FromQuery] string filtro,
@@ -70,6 +92,18 @@ public class TransacoesController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Cria uma nova transação financeira.
+    /// </summary>
+    /// <remarks>
+    /// Regras aplicadas:
+    /// - Usuário deve existir.
+    /// - Categoria deve existir.
+    /// - Menores de idade não podem registrar receitas.
+    /// - A finalidade da categoria deve ser compatível com o tipo da transação.
+    /// </remarks>
+    /// <param name="dto">Dados da transação.</param>
+    /// <returns>Transação criada ou erro de validação.</returns>
     [HttpPost("nova")]
     public async Task<ActionResult<TransacaoResponseDto>> Create([FromBody] TransacaoCreateDto dto)
     {
@@ -77,17 +111,16 @@ public class TransacoesController : ControllerBase
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        // 1. Buscar usuário
+        
         var usuario = await _unitOfWork.UsuarioRepository.GetByIdAsync(dto.UsuarioId);
         if (usuario == null)
             return BadRequest("Usuário não encontrado.");
 
-        // 2. Buscar categoria
+       
         var categoria = await _unitOfWork.CategoriaRepository.GetByIdAsync(dto.CategoriaId);
         if (categoria == null)
             return BadRequest("Categoria não encontrada.");
 
-        // 3. Regras de negócio
         if (usuario.Idade < 18 && dto.Tipo == TipoTransacao.Receita)
             return BadRequest("Menores de idade não podem registrar receitas.");
 
@@ -95,7 +128,7 @@ public class TransacoesController : ControllerBase
             (dto.Tipo == TipoTransacao.Receita && categoria.Finalidade != FinalidadeCategoria.Receita))
             return BadRequest("Categoria incompatível com o tipo da transação.");
 
-        // 4. Criar transação
+        
         var transacao = new Transacao(
             dto.Valor,
             dto.Descricao,

@@ -9,6 +9,13 @@ using Nelibur.ObjectMapper;
 
 namespace HomeControl.Controllers;
 
+/// <summary>
+/// Gerencia operações relacionadas aos usuários do sistema.
+/// </summary>
+/// <remarks>
+/// Permite cadastro, consulta, atualização e exclusão de usuários.
+/// Os endpoints utilizam paginação e validação de dados via FluentValidation.
+/// </remarks>
 [Route("api/v{version:apiVersion}/usuarios")]
 [ApiController]
 [ApiVersion("1.0")]
@@ -24,6 +31,12 @@ public class UsuariosController : ControllerBase
         _updateValidator = updateValidator;
     }
 
+    /// <summary>
+    /// Retorna uma lista paginada de usuários.
+    /// </summary>
+    /// <param name="pageNumber">Número da página.</param>
+    /// <param name="pageSize">Quantidade de registros por página.</param>
+    /// <returns>Lista paginada de usuários.</returns>
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UsuarioResponseDto>>> GetAll(
@@ -42,7 +55,11 @@ public class UsuariosController : ControllerBase
         return Ok(dtoList);
     }
 
-
+    /// <summary>
+    /// Retorna os dados de um usuário específico pelo ID.
+    /// </summary>
+    /// <param name="id">Identificador do usuário.</param>
+    /// 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<UsuarioResponseDto>> GetById(Guid id)
     {
@@ -55,6 +72,12 @@ public class UsuariosController : ControllerBase
         return Ok(dto);
     }
 
+    /// <summary>
+    /// Realiza a busca de usuários pelo nome.
+    /// </summary>
+    /// <param name="nome">Nome ou parte do nome do usuário.</param>
+    /// <param name="pageNumber">Número da página.</param>
+    /// <param name="pageSize">Quantidade de registros por página.</param>
     [HttpGet("buscar")]
     public async Task<ActionResult<IEnumerable<UsuarioResponseDto>>> BuscarPorNome(
         [FromQuery] string nome,
@@ -72,6 +95,12 @@ public class UsuariosController : ControllerBase
         return Ok(dtoList);
     }
 
+    /// <summary>
+    /// Cadastra um novo usuário no sistema.
+    /// </summary>
+    /// <remarks>
+    /// Os dados são validados antes da criação do usuário.
+    /// </remarks>
     [HttpPost("cadastrar")]
     public async Task<ActionResult<UsuarioResponseDto>> Create(
         [FromBody] UsuarioCreateDto usuarioCreateDto)
@@ -96,6 +125,12 @@ public class UsuariosController : ControllerBase
 
         return CreatedAtAction(nameof(GetById), new { id = usuarioResponseDto.Id }, usuarioResponseDto);
     }
+
+    /// <summary>
+    /// Atualiza os dados de um usuário existente.
+    /// </summary>
+    /// <param name="id">Identificador do usuário.</param>
+    /// <param name="usuarioUpdateDto">Dados atualizados do usuário.</param>
 
     [HttpPut("atualizar/{id:guid}")]
     public async Task <ActionResult<UsuarioResponseDto>> Update(
@@ -125,7 +160,12 @@ public class UsuariosController : ControllerBase
         return Ok(usuarioResponseDto);
     }
 
-
+    /// <summary>
+    /// Remove um usuário do sistema.
+    /// </summary>
+    /// <param name="id">Identificador do usuário.</param>
+    /// <response code="204">Usuário removido com sucesso.</response>
+    /// <response code="404">Usuário não encontrado.</response>
     [HttpDelete("excluir/{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {

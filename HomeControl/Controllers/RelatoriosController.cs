@@ -1,7 +1,5 @@
 ﻿using Application.Interfaces;
-
 using Asp.Versioning;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeControl.Controllers;
@@ -18,6 +16,12 @@ public class RelatoriosController : ControllerBase
         _relatorioService = relatorioService;
     }
 
+
+    /// <summary>
+    /// Retorna o relatório de totais financeiros agrupados por usuário.
+    /// </summary>
+    /// <response code="200">PDF gerado com sucesso.</response>
+    /// 
     [HttpGet("totais-por-usuario")]
     public IActionResult GerarRelatorioTotaisPorUsuario()
     {
@@ -31,6 +35,15 @@ public class RelatoriosController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Gera um relatório financeiro em PDF contendo os totais
+    /// agrupados por categoria.
+    /// </summary>
+    /// <remarks>
+    /// O relatório é gerado dinamicamente utilizando QuestPDF
+    /// e retorna o arquivo para download.
+    /// </remarks>
+    /// <response code="200">PDF gerado com sucesso.</response>
     [HttpGet("totais-por-categoria")]
     public IActionResult GerarRelatorioTotaisPorCategoria()
     {

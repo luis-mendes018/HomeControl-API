@@ -13,6 +13,14 @@ using Nelibur.ObjectMapper;
 
 namespace HomeControl.Controllers;
 
+/// <summary>
+/// Controller responsável pelo gerenciamento de categorias.
+/// </summary>
+/// <remarks>
+/// Fornece operações de listagem, busca, criação, atualização
+/// e exclusão de categorias, com suporte a paginação e validação.
+/// </remarks>
+/// 
 [Route("api/v{version:apiVersion}/categorias")]
 [ApiController]
 [ApiVersion("1.0")]
@@ -22,6 +30,15 @@ public class CategoriasController : ControllerBase
     private readonly IValidator<CategoriaCreateDto> _createValidator;
     private readonly IValidator<CategoriaUpdateDto> _updateValidator;
 
+    /// <summary>
+    /// Inicializa o controller de categorias com suas dependências.
+    /// </summary>
+    /// <param name="unitOfWork">
+    /// Unidade de trabalho responsável pelo acesso aos repositórios
+    /// e controle de transações.
+    /// </param>
+    /// <param name="updateValidator">Validador do DTO de atualização.</param>
+    /// <param name="createValidator">Validador do DTO de criação.</param>
     public CategoriasController(IUnitOfWork unitOfWork, 
         IValidator<CategoriaUpdateDto> updateValidator, 
         IValidator<CategoriaCreateDto> createValidator)
@@ -31,6 +48,14 @@ public class CategoriasController : ControllerBase
         _createValidator = createValidator;
     }
 
+
+    /// <summary>
+    /// Retorna uma lista paginada de categorias.
+    /// </summary>
+    /// <remarks>
+    /// Os metadados de paginação são retornados nos headers da resposta.
+    /// </remarks>
+    /// <response code="200">Lista de categorias retornada com sucesso.</response>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoriaResponseDto>>> GetAll(
     [FromQuery] int pageNumber = 1,
@@ -50,6 +75,12 @@ public class CategoriasController : ControllerBase
     }
 
 
+    /// <summary>
+    /// Retorna uma categoria específica pelo seu identificador.
+    /// </summary>
+    /// <param name="id">Identificador único da categoria.</param>
+    /// <response code="200">Categoria encontrada.</response>
+    /// <response code="404">Categoria não encontrada.</response>
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<CategoriaResponseDto>> GetById(Guid id)
     {
@@ -65,6 +96,17 @@ public class CategoriasController : ControllerBase
         return Ok(dto);
     }
 
+
+    /// <summary>
+    /// Realiza a busca de categorias por descrição, com paginação.
+    /// </summary>
+    /// <param name="descricao">Texto utilizado para filtrar categorias.</param>
+    /// <param name="pageNumber">Número da página.</param>
+    /// <param name="pageSize">Quantidade de registros por página.</param>
+    /// <remarks>
+    /// A busca é realizada por correspondência parcial do nome.
+    /// </remarks>
+    /// <response code="200">Categorias encontradas.</response>
     [HttpGet("buscar")]
     public async Task<ActionResult<IEnumerable<CategoriaResponseDto>>> BuscarPorDescricao(
     [FromQuery] string descricao,
@@ -86,6 +128,16 @@ public class CategoriasController : ControllerBase
         return Ok(dtoList);
     }
 
+
+
+    /// <summary>
+    /// Cria uma nova categoria.
+    /// </summary>
+    /// <remarks>
+    /// Os dados de entrada são validados antes da persistência.
+    /// </remarks>
+    /// <response code="201">Categoria criada com sucesso.</response>
+    /// <response code="400">Dados inválidos.</response>
 
     [HttpPost("criar")]
     public async Task<ActionResult<CategoriaResponseDto>> Create(
@@ -112,6 +164,14 @@ public class CategoriasController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = categoria.Id }, responseDto);
     }
 
+
+    /// <summary>
+    /// Atualiza os dados de uma categoria existente.
+    /// </summary>
+    /// <param name="id">Identificador da categoria.</param>
+    /// <param name="categoriaUpdateDto">Dados atualizados da categoria.</param>
+    /// <response code="200">Categoria atualizada com sucesso.</response>
+    /// <response code="404">Categoria não encontrada.</response>
 
     [HttpPut("atualizar/{id:guid}")]
     public async Task<ActionResult<CategoriaResponseDto>> Update(
@@ -141,7 +201,12 @@ public class CategoriasController : ControllerBase
         return Ok(responseDto);
     }
 
-
+    /// <summary>
+    /// Remove uma categoria pelo seu identificador.
+    /// </summary>
+    /// <param name="id">Identificador da categoria.</param>
+    /// <response code="204">Categoria removida com sucesso.</response>
+    /// <response code="404">Categoria não encontrada.</response>
 
     [HttpDelete("excluir/{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)

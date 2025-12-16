@@ -6,6 +6,13 @@ using QuestPDF.Infrastructure;
 
 namespace HomeControl.Relatorios;
 
+/// <summary>
+/// Documento QuestPDF responsável pela renderização
+/// do relatório de totais financeiros agrupados por usuário.
+/// </summary>
+/// <remarks>
+/// Contém tabela com valores individuais e total geral ao final.
+/// </remarks>
 public class TotaisPorUsuarioDocument : IDocument
 {
     private readonly IEnumerable<TotaisPorUsuarioDto> _dados;
@@ -31,8 +38,8 @@ public class TotaisPorUsuarioDocument : IDocument
 
             page.Content().Column(column =>
             {
-                // Título
-                column.Item().Text("Relatório de Totais por Usuário")
+                
+                column.Item().Text("Relatório de Despesas e Receitas Totais por Usuário")
                     .FontSize(20)
                     .Bold();
 
@@ -42,10 +49,10 @@ public class TotaisPorUsuarioDocument : IDocument
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.RelativeColumn(3); // Nome
-                        columns.RelativeColumn(2); // Receita
-                        columns.RelativeColumn(2); // Despesa
-                        columns.RelativeColumn(2); // Saldo
+                        columns.RelativeColumn(3); 
+                        columns.RelativeColumn(2); 
+                        columns.RelativeColumn(2); 
+                        columns.RelativeColumn(2); 
                     });
 
                     // Cabeçalho

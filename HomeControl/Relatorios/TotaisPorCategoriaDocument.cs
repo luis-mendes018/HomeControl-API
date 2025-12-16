@@ -5,6 +5,13 @@ using QuestPDF.Infrastructure;
 
 namespace HomeControl.Relatorios;
 
+/// <summary>
+/// Documento QuestPDF responsável pela renderização
+/// do relatório de totais financeiros agrupados por categoria.
+/// </summary>
+/// <remarks>
+/// Contém tabela com valores individuais e total geral ao final.
+/// </remarks>
 public class TotaisPorCategoriaDocument : IDocument
 {
     private readonly IEnumerable<TotaisPorCategoriaDto> _dados;
@@ -19,7 +26,9 @@ public class TotaisPorCategoriaDocument : IDocument
 
     public void Compose(IDocumentContainer container)
     {
-        // 🔢 Total geral
+        // Estrutura o relatório em uma tabela contendo:
+        // - valores por categoria
+        // - total geral ao final
         var totalReceitas = _dados.Sum(x => x.TotalReceita);
         var totalDespesas = _dados.Sum(x => x.TotalDespesa);
         var saldoGeral = totalReceitas - totalDespesas;
@@ -30,8 +39,8 @@ public class TotaisPorCategoriaDocument : IDocument
 
             page.Content().Column(column =>
             {
-                // Título
-                column.Item().Text("Relatório de Totais por Categoria")
+                
+                column.Item().Text("Relatório de Despesas e Receitas Totais por Categoria")
                     .FontSize(20)
                     .Bold();
 
@@ -41,13 +50,13 @@ public class TotaisPorCategoriaDocument : IDocument
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.RelativeColumn(3); // Categoria
-                        columns.RelativeColumn(2); // Receita
-                        columns.RelativeColumn(2); // Despesa
-                        columns.RelativeColumn(2); // Saldo
+                        columns.RelativeColumn(3); 
+                        columns.RelativeColumn(2); 
+                        columns.RelativeColumn(2); 
+                        columns.RelativeColumn(2); 
                     });
 
-                    // Cabeçalho
+                    
                     table.Header(header =>
                     {
                         header.Cell().Element(CellHeaderStyle).Text("Categoria");
@@ -56,7 +65,7 @@ public class TotaisPorCategoriaDocument : IDocument
                         header.Cell().Element(CellHeaderStyle).AlignRight().Text("Saldo");
                     });
 
-                    // Linhas
+                    
                     for (int i = 0; i < _dados.Count(); i++)
                     {
                         var item = _dados.ElementAt(i);
@@ -77,7 +86,7 @@ public class TotaisPorCategoriaDocument : IDocument
                             .Bold();
                     }
 
-                    // 🔥 TOTAL GERAL
+                   
                     table.Cell().Element(CellHeaderStyle)
                         .Text("TOTAL GERAL");
 

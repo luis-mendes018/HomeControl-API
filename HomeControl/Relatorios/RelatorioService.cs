@@ -5,6 +5,11 @@ using QuestPDF.Fluent;
 
 namespace HomeControl.Relatorios;
 
+/// <summary>
+/// Implementação do serviço de relatórios.
+/// A geração do PDF é feita nesta camada pois depende
+/// diretamente da biblioteca QuestPDF.
+/// </summary>
 public class RelatorioService : IRelatorioService
 {
     private readonly TransacaoService _transacaoService;

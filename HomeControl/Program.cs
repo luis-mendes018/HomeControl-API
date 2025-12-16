@@ -18,6 +18,8 @@ using Infrastructure.Ioc;
 
 using QuestPDF.Infrastructure;
 
+using System.Reflection;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,7 +51,16 @@ builder.Services.AddApiVersioning(options =>
 });
 
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+
+    var applicationXml = "Application.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, applicationXml));
+});
+
 
 builder.Services.AddMappings();
 
