@@ -1,5 +1,7 @@
 <Solution>
-  <Folder Name="/tests/" />
+  <Folder Name="/tests/">
+    <Project Path="Application.Tests/Application.Tests.csproj" Id="38aad035-b997-4b60-844a-6ce8dff603ce" />
+  </Folder>
   <Project Path="Application/Application.csproj" Id="f007de37-1fc2-4d1e-a81c-b1aae5b2f015" />
   <Project Path="Domain/Domain.csproj" Id="f915272d-0c35-4fa2-bfe0-f54a1b5fc892" />
   <Project Path="HomeControl/HomeControl.csproj" />
