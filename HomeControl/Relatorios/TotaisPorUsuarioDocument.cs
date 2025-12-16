@@ -39,7 +39,7 @@ public class TotaisPorUsuarioDocument : IDocument
             page.Content().Column(column =>
             {
                 
-                column.Item().Text("Relatório de Despesas e Receitas Totais por Usuário")
+                column.Item().Text("Relatório do Total de Despesas e Receitas por Usuário")
                     .FontSize(20)
                     .Bold();
 

@@ -40,7 +40,7 @@ public class TotaisPorCategoriaDocument : IDocument
             page.Content().Column(column =>
             {
                 
-                column.Item().Text("Relatório de Despesas e Receitas Totais por Categoria")
+                column.Item().Text("Relatório do total de Despesas e Receitas por Categoria")
                     .FontSize(20)
                     .Bold();
 
