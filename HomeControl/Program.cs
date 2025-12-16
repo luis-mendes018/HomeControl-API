@@ -37,6 +37,21 @@ builder.Configuration
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+var OriginAcessoPermitido = "_origemAcessoPermitido";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: OriginAcessoPermitido,
+     policy =>
+     {
+         policy.WithOrigins("http://localhost:3000/")
+         .AllowAnyHeader()
+         .AllowAnyMethod()
+         .AllowCredentials()
+         .WithExposedHeaders("X-Pagination");
+     });
+});
+
 
 builder.Services.AddApiVersioning(options =>
 {
@@ -104,7 +119,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-
+app.UseCors(OriginAcessoPermitido);
 app.UseAuthorization();
 
 app.MapControllers();
