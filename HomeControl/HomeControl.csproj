@@ -11,6 +11,7 @@
     <None Remove="appsettings.json~RF9526bf3.TMP" />
     <None Remove="Controllers\TransacoesController.cs~RF609fce3.TMP" />
     <None Remove="Properties\launchSettings.json~RF4e3c4c2.TMP" />
+    <None Remove="Relatorios\TotaisPorCategoriaDocument.cs~RFb1371d7.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="QuestPDF" Version="2025.12.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 

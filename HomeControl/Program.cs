@@ -1,7 +1,7 @@
 using Application.DTOs.Categoria;
 using Application.DTOs.Transacao;
 using Application.DTOs.Usuario;
-using Application.Services;
+using Application.Interfaces;
 using Application.Validators.Categorias;
 using Application.Validators.Transacoes;
 using Application.Validators.Usuarios;
@@ -12,12 +12,18 @@ using Asp.Versioning.ApiExplorer;
 using FluentValidation;
 
 using HomeControl.Extensions;
+using HomeControl.Relatorios;
 
 using Infrastructure.Ioc;
+
+using QuestPDF.Infrastructure;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+QuestPDF.Settings.License = LicenseType.Community;
+
 
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -62,7 +68,8 @@ builder.Services.AddScoped<IValidator<CategoriaUpdateDto>, CategoriaUpdateDtoVal
 //Transacoes
 builder.Services.AddScoped<IValidator<TransacaoCreateDto>, TransacaoCreateDtoValidator>();
 
-
+// Register Relatorio Service
+builder.Services.AddScoped<IRelatorioService, RelatorioService>();
 
 var app = builder.Build();
 
