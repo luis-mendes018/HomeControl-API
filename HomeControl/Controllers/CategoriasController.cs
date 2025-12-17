@@ -193,7 +193,7 @@ public class CategoriasController : ControllerBase
         if (categoria == null) return NotFound();
 
         
-        categoria.Atualizar(categoriaUpdateDto.Descricao, categoriaUpdateDto.Finalidade);
+        categoria.Atualizar(categoriaUpdateDto.Descricao);
 
         await _unitOfWork.CommitAsync();
 

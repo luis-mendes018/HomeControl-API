@@ -41,10 +41,9 @@ public class Categoria
         Finalidade = finalidade;
     }
 
-    public void Atualizar(string descricao, FinalidadeCategoria finalidade)
+    public void Atualizar(string descricao)
     {
         SetDescricao(descricao);
-        SetFinalidade(finalidade);
     }
 
 }

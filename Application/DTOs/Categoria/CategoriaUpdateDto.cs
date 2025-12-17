@@ -13,9 +13,4 @@ public class CategoriaUpdateDto
     /// <example>Lanches</example>
     public string Descricao { get; set; }
 
-    /// <summary>
-    /// Nova finalidade da categoria.
-    /// </summary>
-    /// <example>Produto</example>
-    public FinalidadeCategoria Finalidade { get; set; }
 }
