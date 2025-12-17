@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.Categoria;
 using Application.DTOs.Usuario;
 
+using Domain.Enums;
+
 using System.Text.Json.Serialization;
 
 namespace Application.DTOs.Transacao;
@@ -33,6 +35,12 @@ public class TransacaoResponseDto
     /// </summary>
     /// <example>Pagamento de fornecedor</example>
     public string Descricao { get; set; }
+    
+    /// <summary>
+    /// Tipo da transação.
+    /// </summary>
+    /// <example>Pagamento de fornecedor</example>
+    public TipoTransacao Tipo { get; set; }
 
     /// <summary>
     /// Data e hora de criação da transação.
