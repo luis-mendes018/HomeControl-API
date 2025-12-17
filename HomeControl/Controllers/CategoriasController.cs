@@ -201,25 +201,4 @@ public class CategoriasController : ControllerBase
         return Ok(responseDto);
     }
 
-    /// <summary>
-    /// Remove uma categoria pelo seu identificador.
-    /// </summary>
-    /// <param name="id">Identificador da categoria.</param>
-    /// <response code="204">Categoria removida com sucesso.</response>
-    /// <response code="404">Categoria não encontrada.</response>
-
-    [HttpDelete("excluir/{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id)
-    {
-        var categoria = await _unitOfWork.CategoriaRepository.GetByIdAsync(id);
-
-        if (categoria is null)
-            return NotFound();
-
-        await _unitOfWork.CategoriaRepository.DeleteAsync(categoria);
-        await _unitOfWork.CommitAsync();
-
-        return NoContent();
-    }
-
 }
