@@ -25,12 +25,12 @@ public static class DependencyInjection
 
         services.AddDbContext<AppDataContext>(options =>
         {
-            options
-                .UseMySql(
-                    mySqlConnection,
-                    ServerVersion.AutoDetect(mySqlConnection)
-                );
+            options.UseMySql(
+                configuration.GetConnectionString("DefaultConnection"),
+                ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))
+            );
         });
+
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<TransacaoService>();
