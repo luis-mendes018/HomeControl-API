@@ -32,6 +32,7 @@ ou caso esteja usando a IDE do visual studio
 
 <h2>5. Executar a aplicação</h2>
 <pre><code>dotnet run</code></pre>
+ou o botão de executar na IDE do visual studio
 <p>A aplicação estará disponível em <code>(https://localhost:7212)</code></p>
 
 <h2>6. Observações</h2>
